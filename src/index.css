@@ -1,0 +1,137 @@
+/* index.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  --primary-color: #00d2ff;
+  --secondary-color: #3a7bd5;
+  --dark-bg: #050816;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --text-color: #ffffff;
+  --text-light: #b5b5b5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--dark-bg);
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Beautiful Scrollbar */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1023;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+
+  border-radius: 20px;
+}
+
+/* Selection Color */
+
+::selection {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Links */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Buttons */
+
+button {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Inputs */
+
+input {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container */
+
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* Reusable Glow */
+
+.glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(0, 210, 255, 0.15);
+  filter: blur(120px);
+  z-index: -1;
+}
+
+/* Floating Animation */
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Fade Animation */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth Section Animation */
+
+section {
+  animation: fadeIn 1s ease;
+}
