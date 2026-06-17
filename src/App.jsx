@@ -1,77 +1,58 @@
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+/* CONTEXT PROVIDER */
+import { CartProvider } from "./context/CartContext";
 
 /* COMPONENTS */
-
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 /* PAGES */
-
 import Home from "./pages/Home";
 import Products from "./pages/Products";
+import CartPage from "./pages/CartPage"; // Dedicated Cart Page
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AdminProducts from "./AdminProducts";
 
 function App() {
   return (
-    <div className="app">
+    // Wrapping everything inside CartProvider so Navbar, Products, and CartPage share data
+    <CartProvider>
+      <div className="app">
+        {/* NAVBAR */}
+        <Navbar />
 
-      {/* NAVBAR */}
+        {/* ROUTES */}
+        <Routes>
+          {/* DEFAULT HOME PAGE */}
+          <Route path="/" element={<Navigate to="/home" />} />
 
-      <Navbar />
+          {/* HOME */}
+          <Route path="/home" element={<Home />} />
 
-      {/* ROUTES */}
+          {/* PRODUCTS */}
+          <Route path="/products" element={<Products />} />
 
-      <Routes>
+          {/* DEDICATED CART PAGE */}
+          <Route path="/cart" element={<CartPage />} />
 
-        {/* DEFAULT HOME PAGE */}
+          {/* ABOUT */}
+          <Route path="/about" element={<About />} />
 
-        <Route
-          path="/"
-          element={<Navigate to="/home" />}
-        />
+          {/* CONTACT */}
+          <Route path="/contact" element={<Contact />} />
 
-        {/* HOME */}
+          {/* ADMINISTRATIVE CONTROL PANEL 👇 */}
+          <Route path="/admin" element={<AdminProducts />} />
+          
+        </Routes>
 
-        <Route
-          path="/home"
-          element={<Home />}
-        />
-
-        {/* PRODUCTS */}
-
-        <Route
-          path="/products"
-          element={<Products />}
-        />
-
-        {/* ABOUT */}
-
-        <Route
-          path="/about"
-          element={<About />}
-        />
-
-        {/* CONTACT */}
-
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
-
-      </Routes>
-
-      {/* FOOTER */}
-
-      <Footer />
-
-    </div>
+        {/* FOOTER */}
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }
 
