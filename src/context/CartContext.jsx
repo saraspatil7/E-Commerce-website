@@ -1,95 +1,59 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 
-/* CREATE CONTEXT */
-
+// 1. CREATE THE CONTEXT
 const CartContext = createContext();
 
-/* PROVIDER */
-
+// 2. THE PROVIDER COMPONENT (Wraps your app)
 export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState([]);
 
-  const [cartItems, setCartItems] =
-    useState([]);
-
-  /* ADD TO CART */
-
+  /* ADD TO CART FUNCTION */
   const addToCart = (product) => {
-
     setCartItems((prevItems) => {
+      // Check if the item is already in the cart
+      const existingItem = prevItems.find((item) => item.id === product.id);
 
-      const existingItem = prevItems.find(
-        (item) => item.id === product.id
-      );
-
-      // IF PRODUCT ALREADY EXISTS
+      // IF IT EXISTS: Just increase the quantity by 1
       if (existingItem) {
-
         return prevItems.map((item) =>
           item.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
+            ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
 
-      // NEW PRODUCT
-      return [
-        ...prevItems,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ];
+      // IF IT IS NEW: Add it to the array and set quantity to 1
+      return [...prevItems, { ...product, quantity: 1 }];
     });
   };
 
-  /* REMOVE FROM CART */
-
+  /* REMOVE FROM CART FUNCTION (For the purple stepper) */
   const removeFromCart = (productId) => {
-
     setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === productId);
 
-      const existingItem = prevItems.find(
-        (item) => item.id === productId
-      );
-
-      // REMOVE ITEM COMPLETELY
+      // IF QUANTITY IS 1: Completely remove the item from the cart array
       if (existingItem.quantity === 1) {
-
-        return prevItems.filter(
-          (item) => item.id !== productId
-        );
+        return prevItems.filter((item) => item.id !== productId);
       }
 
-      // DECREASE QUANTITY
+      // OTHERWISE: Just decrease the quantity by 1
       return prevItems.map((item) =>
         item.id === productId
-          ? {
-              ...item,
-              quantity: item.quantity - 1,
-            }
+          ? { ...item, quantity: item.quantity - 1 }
           : item
       );
     });
   };
 
-  /* CLEAR CART */
-
+  /* CLEAR ENTIRE CART FUNCTION (Used after successful payment) */
   const clearCart = () => {
     setCartItems([]);
   };
 
-  /* TOTAL CART ITEMS */
-
+  /* TOTAL CART ITEMS (Powers the glowing notification badge in your Navbar) */
   const totalItems = cartItems.reduce(
-    (total, item) =>
-      total + item.quantity,
+    (total, item) => total + item.quantity,
     0
   );
 
@@ -100,7 +64,7 @@ export function CartProvider({ children }) {
         addToCart,
         removeFromCart,
         clearCart,
-        totalItems,
+        totalItems, // Exported to use in Navbar.jsx
       }}
     >
       {children}
@@ -108,8 +72,8 @@ export function CartProvider({ children }) {
   );
 }
 
-/* CUSTOM HOOK */
-
+// 3. CUSTOM HOOK
+// This is what you import at the top of your pages!
 export function useCart() {
   return useContext(CartContext);
 }

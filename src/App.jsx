@@ -14,7 +14,7 @@ import Products from "./pages/Products";
 import CartPage from "./pages/CartPage"; // Dedicated Cart Page
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import AdminProducts from "./AdminProducts";
+import AdminProducts from "./pages/AdminProducts";
 
 function App() {
   return (
